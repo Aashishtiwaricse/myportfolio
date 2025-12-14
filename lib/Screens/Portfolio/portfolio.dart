@@ -1,9 +1,14 @@
+import 'package:ashish_portfolio/Screens/Portfolio/ProRecruiterTipsSection.dart';
+import 'package:ashish_portfolio/Screens/Portfolio/hireMeCTA.dart';
+import 'package:ashish_portfolio/Screens/Portfolio/projectImageSlider.dart';
 import 'package:ashish_portfolio/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui';
 import 'package:visibility_detector/visibility_detector.dart';
+
+import '../../models/projectsModel.dart';
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
@@ -61,6 +66,27 @@ class _PortfolioHomeState extends State<PortfolioHome>
     super.dispose();
   }
 
+  Future<void> _callMe() async {
+    final uri = Uri.parse("tel:+918210297808");
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  Future<void> _openWhatsApp() async {
+    const phone = "918210297808"; // without +
+    final whatsappUri = Uri.parse(
+      "https://wa.me/$phone?text=Hi%20Ashish,%20I%20found%20your%20portfolio",
+    );
+
+    if (await canLaunchUrl(whatsappUri)) {
+      await launchUrl(
+        whatsappUri,
+        mode: LaunchMode.externalApplication,
+      );
+    }
+  }
+
   // -------------------------------
   // UI BUILD
   // -------------------------------
@@ -80,7 +106,7 @@ class _PortfolioHomeState extends State<PortfolioHome>
               child: AppBar(
                 backgroundColor: Colors.white.withOpacity(0.04),
                 elevation: 0,
-                title: const Text('Ashish',
+                title: const Text('Ashish Tiwari',
                     style: TextStyle(fontWeight: FontWeight.w700)),
                 actions: Responsive.isDesktop(context)
                     ? [
@@ -113,6 +139,9 @@ class _PortfolioHomeState extends State<PortfolioHome>
           children: [
             heroSection(),
             sectionWrapper(whatIDoKey, 'What I Do', whatIDo()),
+            SizedBox(height: 60),
+            ProductionDeliverablesSection(),
+            SizedBox(height: 60),
             sectionWrapper(portfolioKey, 'Portfolio', portfolioSection()),
             sectionWrapper(experienceKey, 'Experience', experienceSection()),
             sectionWrapper(skillsKey, 'Skills', skillsSection()),
@@ -120,6 +149,10 @@ class _PortfolioHomeState extends State<PortfolioHome>
                 testimonialKey, 'Testimonials', testimonialsPlaceholder()),
             sectionWrapper(blogsKey, 'Blogs', blogsPlaceholder()),
             sectionWrapper(contactKey, 'Connect', contactSection()),
+            HireMeCTA(
+              onCallTap: _callMe,
+              onWhatsAppTap: _openWhatsApp,
+            ),
             footer(),
           ],
         ),
@@ -134,108 +167,108 @@ class _PortfolioHomeState extends State<PortfolioHome>
     );
   }
 
-Widget heroSection() {
-  final isMobile = Responsive.isMobile(context);
+  Widget heroSection() {
+    final isMobile = Responsive.isMobile(context);
 
-  return Container(
-    key: heroKey,
-    padding: EdgeInsets.symmetric(
-      horizontal: isMobile ? 16 : 60,
-      vertical: isMobile ? 32 : 48,
-    ),
-    child: isMobile
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _heroText(isMobile),
-              const SizedBox(height: 28),
-              ParallaxImage(
-                imgPath: 'assets/ashish_fhd.png',
-                width: 260,
-                height: 300,
-              ),
-            ],
-          )
-        : Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(child: _heroText(isMobile)),
-              const SizedBox(width: 40),
-              ParallaxImage(
-                imgPath: 'assets/ashish_fhd.png',
-                width: 380,
-                height: 430,
-              ),
-            ],
-          ),
-  );
-}
-Widget _heroText(bool isMobile) {
-  return TweenAnimationBuilder<double>(
-    tween: Tween(begin: 0, end: 1),
-    duration: const Duration(milliseconds: 700),
-    builder: (context, v, child) {
-      return Opacity(
-        opacity: v,
-        child: Transform.translate(
-          offset: Offset(0, (1 - v) * 18),
-          child: child,
-        ),
-      );
-    },
-    child: Column(
-      crossAxisAlignment:
-          isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-      children: [
-        RichText(
-          textAlign: isMobile ? TextAlign.center : TextAlign.left,
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: "Hi, I'm ",
-                style: TextStyle(
-                  fontSize: isMobile ? 32 : 48,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white70,
+    return Container(
+      key: heroKey,
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 16 : 60,
+        vertical: isMobile ? 32 : 48,
+      ),
+      child: isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _heroText(isMobile),
+                const SizedBox(height: 28),
+                ParallaxImage(
+                  imgPath: 'assets/ashish_fhd.png',
+                  width: 260,
+                  height: 300,
                 ),
-              ),
-              TextSpan(
-                text: "Ashish",
-                style: TextStyle(
-                  fontSize: isMobile ? 32 : 48,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.blueAccent,
+              ],
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(child: _heroText(isMobile)),
+                const SizedBox(width: 40),
+                ParallaxImage(
+                  imgPath: 'assets/ashish_fhd.png',
+                  width: 380,
+                  height: 430,
                 ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          "Hybrid Mobile Developer",
-          textAlign: isMobile ? TextAlign.center : TextAlign.left,
-          style: TextStyle(
-            fontSize: isMobile ? 18 : 22,
-            color: Colors.white70,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          "Passionate Hybrid Mobile Developer with 3.5+ years of experience "
-          "building high-performance apps for Android, iOS & Web using Flutter & Dart.",
-          textAlign: isMobile ? TextAlign.center : TextAlign.left,
-          style: TextStyle(
-            fontSize: 15,
-            height: 1.6,
-            color: Colors.white70,
-          ),
-        ),
-      ],
-    ),
-  );
-}
+              ],
+            ),
+    );
+  }
 
+  Widget _heroText(bool isMobile) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 700),
+      builder: (context, v, child) {
+        return Opacity(
+          opacity: v,
+          child: Transform.translate(
+            offset: Offset(0, (1 - v) * 18),
+            child: child,
+          ),
+        );
+      },
+      child: Column(
+        crossAxisAlignment:
+            isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+        children: [
+          RichText(
+            textAlign: isMobile ? TextAlign.center : TextAlign.left,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "Hi, I'm ",
+                  style: TextStyle(
+                    fontSize: isMobile ? 32 : 48,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white70,
+                  ),
+                ),
+                TextSpan(
+                  text: "Ashish Tiwari",
+                  style: TextStyle(
+                    fontSize: isMobile ? 32 : 48,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            "Hybrid Mobile Developer",
+            textAlign: isMobile ? TextAlign.center : TextAlign.left,
+            style: TextStyle(
+              fontSize: isMobile ? 18 : 22,
+              color: Colors.white70,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            " With 3.5+ years of experience building scalable Flutter apps for Android, iOS & Web. Specialized in"
+            "performance, clean UI, and real-world API integrations.",
+            textAlign: isMobile ? TextAlign.center : TextAlign.left,
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.6,
+              color: Colors.white70,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget heroText(bool isMobile) {
     return TweenAnimationBuilder<double>(
@@ -265,7 +298,7 @@ Widget _heroText(bool isMobile) {
                   ),
                 ),
                 TextSpan(
-                  text: "Ashish",
+                  text: "Ashish Tiwari",
                   style: TextStyle(
                     fontSize: isMobile ? 32 : 48,
                     fontWeight: FontWeight.w800,
@@ -409,13 +442,15 @@ Widget _heroText(bool isMobile) {
     return Column(
       children: [
         cardTile("Mobile App Development",
-            "High-performance Android & iOS apps using Flutter"),
+            "High-performance Flutter apps used by 10K+ real users on Android & iOS & Web App"),
         const SizedBox(height: 18),
         cardTile("API Integration",
-            "REST APIs, Firebase, WebSockets, Payment Gateway"),
+            "Scalable REST APIs with Firebase & payment gateways — reduced API latency by 30%"),
         const SizedBox(height: 18),
-        cardTile(
-            "UI/UX", "Clean, modern, responsive UI components & navigation"),
+        cardTile("UI/UX Engineering",
+            "Pixel-perfect, responsive UI with smooth navigation & UX best practices"),
+        cardTile("Architecture & State Management",
+            "Clean Architecture with GetX & Provider for scalable, testable apps"),
       ],
     );
   }
@@ -460,99 +495,122 @@ Widget _heroText(bool isMobile) {
   }
 
   // ---------------- PORTFOLIO ----------------
+
   Widget portfolioSection() {
-    // Replace with your own project images
     final projects = [
-      'assets/iPhone 13 Pro.png',
-      'assets/Pemaxx.png',
-      'assets/stock_app_image.png',
-      'assets/u.png',
-      'assets/sarvo.png',
-      'assets/urban.jpeg',
-      'assets/ezt.jpeg',
-      'assets/mobitel.jpeg'
+      Project(images: [
+        'assets/iPhone 13 Pro.png',
+        'assets/track.png',
+        'assets/trackk.png'
+      ]),
+      Project(
+          images: ['assets/Pemaxx.png', 'assets/pemx.png', 'assets/pemax.png']),
+      Project(images: [
+        'assets/ezt.jpeg',
+        'assets/ezymart.jpeg',
+        'assets/ezym.jpeg',
+      ]),
+      Project(images: [
+        'assets/food.jpeg',
+        'assets/food1.jpeg',
+        'assets/food2.jpeg',
+      ]),
+      Project(images: [
+        'assets/service.jpeg',
+        'assets/service1.jpeg',
+        'assets/service2.jpeg',
+      ]),
+      Project(images: [
+        'assets/mart.jpeg',
+        'assets/mart2.jpeg',
+        'assets/mart1.jpeg'
+      ]),
     ];
 
     return animatedPortfolioGrid(projects);
   }
 
-Widget animatedPortfolioGrid(List<String> images) {
-  final isMobile = Responsive.isMobile(context);
-  final isDesktop = Responsive.isDesktop(context);
+  void showProjectPreview(BuildContext context, List<String> images) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.8),
+      builder: (_) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(16),
+        child: ProjectImageSlider(images: images),
+      ),
+    );
+  }
 
-  return GridView.builder(
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    itemCount: images.length,
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: isMobile ? 1 : 2, // ✅ KEY FIX
-      crossAxisSpacing: isMobile ? 14 : 22,
-      mainAxisSpacing: isMobile ? 14 : 18,
-      childAspectRatio: isMobile ? 1.25 : 1.9, // ✅ web unchanged
-    ),
-    itemBuilder: (context, index) {
-      final isHovered = hoverIndex == index;
+  Widget animatedPortfolioGrid(List<Project> projects) {
+    final isMobile = Responsive.isMobile(context);
+    final isDesktop = Responsive.isDesktop(context);
 
-      return Padding(
-        padding: EdgeInsets.only(bottom: isMobile ? 16 : 40),
-        child: GestureDetector(
-          onTap: () {
-            // mobile interaction (optional)
-          },
-          child: MouseRegion(
-            onEnter: isDesktop
-                ? (_) => setState(() => hoverIndex = index)
-                : null,
-            onExit: isDesktop
-                ? (_) => setState(() => hoverIndex = -1)
-                : null,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 260),
-              transform: isDesktop && isHovered
-                  ? (Matrix4.identity()
-                    ..translate(0, -8)
-                    ..scale(1.03))
-                  : Matrix4.identity(),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [
-                  if (isDesktop && isHovered)
-                    BoxShadow(
-                      color: Colors.blueAccent.withOpacity(0.22),
-                      blurRadius: 20,
-                      offset: const Offset(0, 8),
-                    ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(14),
-                child: Stack(
-                  children: [
-                    /// IMAGE — SAME AS YOUR OLD WORKING VERSION
-                    Positioned.fill(
-                      child: Image.asset(
-                        images[index],
-                        fit: BoxFit.contain, // ✅ FULL IMAGE, NO CROP
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: projects.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: isMobile ? 1 : 2,
+        crossAxisSpacing: isMobile ? 14 : 22,
+        mainAxisSpacing: isMobile ? 14 : 18,
+        childAspectRatio: isMobile ? 1.25 : 1.9,
+      ),
+      itemBuilder: (context, index) {
+        final project = projects[index];
+        final isHovered = hoverIndex == index;
+
+        return Padding(
+          padding: EdgeInsets.only(bottom: isMobile ? 16 : 40),
+          child: GestureDetector(
+            onTap: () => showProjectPreview(context, project.images),
+            child: MouseRegion(
+              onEnter:
+                  isDesktop ? (_) => setState(() => hoverIndex = index) : null,
+              onExit: isDesktop ? (_) => setState(() => hoverIndex = -1) : null,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 260),
+                transform: isDesktop && isHovered
+                    ? (Matrix4.identity()
+                      ..translate(0, -8)
+                      ..scale(1.03))
+                    : Matrix4.identity(),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    if (isDesktop && isHovered)
+                      BoxShadow(
+                        color: Colors.blueAccent.withOpacity(0.22),
+                        blurRadius: 20,
+                        offset: const Offset(0, 8),
                       ),
-                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: Stack(
+                    children: [
+                      /// Thumbnail = FIRST IMAGE
+                      Positioned.fill(
+                        child: Image.asset(
+                          project.images.first,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
 
-                    /// OVERLAY
-                    AnimatedOpacity(
-                      duration: const Duration(milliseconds: 200),
-                      opacity: isDesktop
-                          ? (isHovered ? 0.18 : 0.0)
-                          : 0.08,
-                      child: Container(color: Colors.black),
-                    ),
+                      /// Overlay
+                      AnimatedOpacity(
+                        duration: const Duration(milliseconds: 200),
+                        opacity: isDesktop ? (isHovered ? 0.18 : 0.0) : 0.08,
+                        child: Container(color: Colors.black),
+                      ),
 
-                    /// ACTION LABEL
-                    Positioned(
-                      bottom: 12,
-                      left: 12,
-                      right: 12,
-                      child: AnimatedOpacity(
-                        duration: const Duration(milliseconds: 220),
-                        opacity: isDesktop ? (isHovered ? 1.0 : 0.0) : 1.0,
+                      /// Label
+                      Positioned(
+                        bottom: 12,
+                        left: 12,
+                        right: 12,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 10),
@@ -570,18 +628,16 @@ Widget animatedPortfolioGrid(List<String> images) {
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    },
-  );
-}
-
+        );
+      },
+    );
+  }
 
   // ---------------- EXPERIENCE ----------------
   Widget experienceSection() {
