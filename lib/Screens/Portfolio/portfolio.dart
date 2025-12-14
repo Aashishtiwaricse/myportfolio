@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'dart:html' as html;
 
 import '../../models/projectsModel.dart';
 
@@ -264,6 +265,50 @@ class _PortfolioHomeState extends State<PortfolioHome>
               height: 1.6,
               color: Colors.white70,
             ),
+          ),
+          const SizedBox(height: 22),
+          ElevatedButton.icon(
+  onPressed: () {
+    html.AnchorElement(
+      href: 'assets/Ashish_Tiwari_Flutter_Developer.pdf',
+    )
+      ..setAttribute(
+        'download',
+        'Ashish_Tiwari_Flutter_Developer_CV.pdf',
+      )
+      ..click();
+  },
+  icon: const Icon(Icons.download, color: Colors.black),
+  label: const Text(
+    "Download CV",
+    style: TextStyle(color: Colors.black),
+  ),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.white,
+    padding: EdgeInsets.symmetric(
+      horizontal: isMobile ? 18 : 22,
+      vertical: 12,
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30),
+    ),
+  ),
+),
+          const SizedBox(height: 18),
+          Wrap(
+            spacing: 12,
+            children: [
+              socialIcon(FontAwesomeIcons.linkedin,
+                  "https://www.linkedin.com/in/ashish-tiwari-2a4a7018b/"),
+              socialIcon(FontAwesomeIcons.github, "https://github.com/"),
+              socialIcon(FontAwesomeIcons.envelope,
+                  "mailto:aashishtiwari.cse@gmail.com"),
+              socialIcon(FontAwesomeIcons.phone, "tel:+918210297808"),
+              socialIcon(
+                FontAwesomeIcons.whatsapp,
+                "https://wa.me/918210297808",
+              ),
+            ],
           ),
         ],
       ),
@@ -775,7 +820,8 @@ class _PortfolioHomeState extends State<PortfolioHome>
 
   // ---------------- TESTIMONIALS & BLOGS ----------------
   Widget testimonialsPlaceholder() {
-    return const Text("“Worked with startups & enterprise clients (details on request)”",
+    return const Text(
+        "“Worked with startups & enterprise clients (details on request)”",
         style: TextStyle(color: Colors.white54));
   }
 
