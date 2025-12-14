@@ -775,7 +775,7 @@ class _PortfolioHomeState extends State<PortfolioHome>
 
   // ---------------- TESTIMONIALS & BLOGS ----------------
   Widget testimonialsPlaceholder() {
-    return const Text("Testimonials coming soon...",
+    return const Text("“Worked with startups & enterprise clients (details on request)”",
         style: TextStyle(color: Colors.white54));
   }
 
