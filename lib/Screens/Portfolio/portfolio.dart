@@ -134,38 +134,108 @@ class _PortfolioHomeState extends State<PortfolioHome>
     );
   }
 
-  Widget heroSection() {
-    final isMobile = Responsive.isMobile(context);
+Widget heroSection() {
+  final isMobile = Responsive.isMobile(context);
 
-    return Container(
-      key: heroKey,
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 16 : 60,
-        vertical: isMobile ? 32 : 48,
-      ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return isMobile
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    heroText(isMobile),
-                    const SizedBox(height: 30),
-                    Center(child: heroImage(isMobile)),
-                  ],
-                )
-              : Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(child: heroText(isMobile)),
-                    const SizedBox(width: 40),
-                    heroImage(isMobile),
-                  ],
-                );
-        },
-      ),
-    );
-  }
+  return Container(
+    key: heroKey,
+    padding: EdgeInsets.symmetric(
+      horizontal: isMobile ? 16 : 60,
+      vertical: isMobile ? 32 : 48,
+    ),
+    child: isMobile
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _heroText(isMobile),
+              const SizedBox(height: 28),
+              ParallaxImage(
+                imgPath: 'assets/ashish_fhd.png',
+                width: 260,
+                height: 300,
+              ),
+            ],
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: _heroText(isMobile)),
+              const SizedBox(width: 40),
+              ParallaxImage(
+                imgPath: 'assets/ashish_fhd.png',
+                width: 380,
+                height: 430,
+              ),
+            ],
+          ),
+  );
+}
+Widget _heroText(bool isMobile) {
+  return TweenAnimationBuilder<double>(
+    tween: Tween(begin: 0, end: 1),
+    duration: const Duration(milliseconds: 700),
+    builder: (context, v, child) {
+      return Opacity(
+        opacity: v,
+        child: Transform.translate(
+          offset: Offset(0, (1 - v) * 18),
+          child: child,
+        ),
+      );
+    },
+    child: Column(
+      crossAxisAlignment:
+          isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      children: [
+        RichText(
+          textAlign: isMobile ? TextAlign.center : TextAlign.left,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Hi, I'm ",
+                style: TextStyle(
+                  fontSize: isMobile ? 32 : 48,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white70,
+                ),
+              ),
+              TextSpan(
+                text: "Ashish",
+                style: TextStyle(
+                  fontSize: isMobile ? 32 : 48,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.blueAccent,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          "Hybrid Mobile Developer",
+          textAlign: isMobile ? TextAlign.center : TextAlign.left,
+          style: TextStyle(
+            fontSize: isMobile ? 18 : 22,
+            color: Colors.white70,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          "Passionate Hybrid Mobile Developer with 3.5+ years of experience "
+          "building high-performance apps for Android, iOS & Web using Flutter & Dart.",
+          textAlign: isMobile ? TextAlign.center : TextAlign.left,
+          style: TextStyle(
+            fontSize: 15,
+            height: 1.6,
+            color: Colors.white70,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget heroText(bool isMobile) {
     return TweenAnimationBuilder<double>(
