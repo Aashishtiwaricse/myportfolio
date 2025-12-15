@@ -256,6 +256,28 @@ class _PortfolioHomeState extends State<PortfolioHome>
             ),
           ),
           const SizedBox(height: 16),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment:
+                isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/flu.png',
+             //   width: 45,
+                height: 65,
+                //color: Colors.blueAccent.withOpacity(0.9), // matches theme
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Android • iOS • Web',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white60,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
           Text(
             " With 3.5+ years of experience building scalable Flutter apps for Android, iOS & Web. Specialized in"
             "performance, clean UI, and real-world API integrations.",
@@ -268,32 +290,32 @@ class _PortfolioHomeState extends State<PortfolioHome>
           ),
           const SizedBox(height: 22),
           ElevatedButton.icon(
-  onPressed: () {
-    html.AnchorElement(
-      href: 'assets/Ashish_Tiwari_Flutter_Developer.pdf',
-    )
-      ..setAttribute(
-        'download',
-        'Ashish_Tiwari_Flutter_Developer_CV.pdf',
-      )
-      ..click();
-  },
-  icon: const Icon(Icons.download, color: Colors.black),
-  label: const Text(
-    "Download CV",
-    style: TextStyle(color: Colors.black),
-  ),
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.white,
-    padding: EdgeInsets.symmetric(
-      horizontal: isMobile ? 18 : 22,
-      vertical: 12,
-    ),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30),
-    ),
-  ),
-),
+            onPressed: () {
+              html.AnchorElement(
+                href: 'assets/Ashish_Tiwari_Flutter_Developer.pdf',
+              )
+                ..setAttribute(
+                  'download',
+                  'Ashish_Tiwari_Flutter_Developer_CV.pdf',
+                )
+                ..click();
+            },
+            icon: const Icon(Icons.download, color: Colors.black),
+            label: const Text(
+              "Download CV",
+              style: TextStyle(color: Colors.black),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 18 : 22,
+                vertical: 12,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+          ),
           const SizedBox(height: 18),
           Wrap(
             spacing: 12,

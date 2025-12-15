@@ -19,6 +19,10 @@ dependencies:
   flutter_animate: ^4.5.0
   font_awesome_flutter: ^10.7.0
 
+  firebase_core: ^2.25.0
+  firebase_analytics: ^10.8.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -53,6 +57,12 @@ flutter:
     - assets/mart2.jpeg
     - assets/mart1.jpeg
     - assets/Ashish_Tiwari_Flutter_Developer.pdf
+    - assets/flu.png
+
+
+
+
+
 
 
 
