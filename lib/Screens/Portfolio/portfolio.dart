@@ -206,6 +206,14 @@ class _PortfolioHomeState extends State<PortfolioHome>
   }
 
   Widget _heroText(bool isMobile) {
+
+    void downloadCV() {
+  html.AnchorElement anchor = html.AnchorElement(
+    href: '/Ashish_Tiwari_Flutter_Developer.pdf',
+  )
+    ..setAttribute('download', 'Ashish_Tiwari_Flutter_Developer_CV.pdf')
+    ..click();
+}
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
       duration: const Duration(milliseconds: 700),
@@ -289,33 +297,12 @@ class _PortfolioHomeState extends State<PortfolioHome>
             ),
           ),
           const SizedBox(height: 22),
-          ElevatedButton.icon(
-            onPressed: () {
-              html.AnchorElement(
-                href: 'assets/Ashish_Tiwari_Flutter_Developer.pdf',
-              )
-                ..setAttribute(
-                  'download',
-                  'Ashish_Tiwari_Flutter_Developer_CV.pdf',
-                )
-                ..click();
-            },
-            icon: const Icon(Icons.download, color: Colors.black),
-            label: const Text(
-              "Download CV",
-              style: TextStyle(color: Colors.black),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 18 : 22,
-                vertical: 12,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
-          ),
+        ElevatedButton.icon(
+  onPressed: downloadCV,
+  icon: const Icon(Icons.download, color: Colors.black),
+  label: const Text("Download CV"),
+)
+,
           const SizedBox(height: 18),
           Wrap(
             spacing: 12,
@@ -337,103 +324,7 @@ class _PortfolioHomeState extends State<PortfolioHome>
     );
   }
 
-  Widget heroText(bool isMobile) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 700),
-      builder: (context, v, child) {
-        return Opacity(
-          opacity: v,
-          child: Transform.translate(
-            offset: Offset(0, (1 - v) * 18),
-            child: child,
-          ),
-        );
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: "Hi, I'm ",
-                  style: TextStyle(
-                    fontSize: isMobile ? 32 : 48,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white70,
-                  ),
-                ),
-                TextSpan(
-                  text: "Ashish Tiwari",
-                  style: TextStyle(
-                    fontSize: isMobile ? 32 : 48,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.blueAccent,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            "Hybrid Mobile Developer",
-            style: TextStyle(
-              fontSize: isMobile ? 18 : 22,
-              color: Colors.white70,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 18),
-          Text(
-            "Passionate Hybrid Mobile Developer with 3.5+ years of experience "
-            "building high-performance apps for Android, iOS & Web using Flutter & Dart. "
-            "Skilled in GetX, Provider, Firebase, REST APIs, secure authentication, "
-            "offline storage, and clean architecture.\n\n"
-            "I focus on creating modern, scalable, and user-centric applications with "
-            "smooth UI/UX, optimized performance, and maintainable code. "
-            "Open to Full-Time, Remote, Contractual & Freelance opportunities.",
-            style: TextStyle(
-              fontSize: isMobile ? 14.5 : 16,
-              height: 1.6,
-              color: Colors.white70,
-            ),
-          ),
-          const SizedBox(height: 22),
-          ElevatedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.download, color: Colors.black),
-            label: const Text(
-              "Download CV",
-              style: TextStyle(color: Colors.black),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 18 : 22,
-                vertical: 12,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
-          ),
-          const SizedBox(height: 18),
-          Wrap(
-            spacing: 12,
-            children: [
-              socialIcon(FontAwesomeIcons.linkedin,
-                  "https://www.linkedin.com/in/ashish-tiwari-2a4a7018b/"),
-              socialIcon(FontAwesomeIcons.github, "https://github.com/"),
-              socialIcon(FontAwesomeIcons.envelope,
-                  "mailto:aashishtiwari.cse@gmail.com"),
-              socialIcon(FontAwesomeIcons.phone, "tel:+918210297808"),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  
 
   Widget heroImage(bool isMobile) {
     return ParallaxImage(
